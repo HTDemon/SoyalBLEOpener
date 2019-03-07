@@ -49,18 +49,17 @@
             setInterval(function() {
                 Puck.eval("BTN.read()", function(x) {
                     if (x) {
-                        document.getElementById("p1").innerHTML = document.write();
                         for (var i = 0; i < 3; i++) {
                             setTimeout(function() {
                                 Puck.write('LED3.set();\n');
-                            }, 100);
+                            }, 50);
                             setTimeout(function() {
                                 Puck.write('LED3.reset();\n');
-                            }, 100);
+                            }, 50);
                         }
                     }
                 })
-            }, 3000);
+            }, 100);
         });
     </script>
     <button onclick="setP1();">Test set P1</button>
