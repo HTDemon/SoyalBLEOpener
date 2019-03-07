@@ -1,0 +1,69 @@
+<html>
+<meta charset="UTF-8" />
+<title>Soyal Opener</title>
+
+<head>
+</head>
+
+<body>
+    <p id="p1">Hello World!</p>
+    <script src="src/scripts/puck.js"></script>
+    <script>
+        var url = 'http://192.168.31.30/buttons.cgi';
+        var data = 'btn_Node=255&' +
+            'btnOpenAllPulse=+Action+&' +
+            'btn_nameDI0=DI0&' +
+            'btn_nameDI1=DI2&' +
+            'btn_nameDI2=DI2&' +
+            'btn_nameDI3=DI3&' +
+            'btn_nameDO0=DO0&' +
+            'delayDO0=0&' +
+            'btn_nameDO1=DO1&' +
+            'delayDO1=0&' +
+            'btn_nameDO2=DO2&' +
+            'delayDO2=0&' +
+            'btn_nameDO3=DO3&' +
+            'delayDO3=0';
+
+        function postData(url, data) {
+            // Default options are marked with *
+            return fetch(url, {
+                    body: data, // must match 'Content-Type' header
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                        'Authorization': 'Basic YWRtaW46',
+                    },
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    redirect: 'follow', // manual, *follow, error
+                    referrer: 'no-referrer', // *client, no-referrer
+                })
+                .then(response => response.json()) // 輸出成 json
+        }
+
+        function setP1() {
+            document.getElementById("p1").innerHTML = document.write();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            setInterval(function() {
+                Puck.eval("BTN.read()", function(x) {
+                    if (x) {
+                        document.getElementById("p1").innerHTML = document.write();
+                        for (var i = 0; i < 3; i++) {
+                            setTimeout(function() {
+                                Puck.write('LED3.set();\n');
+                            }, 100);
+                            setTimeout(function() {
+                                Puck.write('LED3.reset();\n');
+                            }, 100);
+                        }
+                    }
+                })
+            }, 3000);
+        });
+    </script>
+    <button onclick="setP1();">Test set P1</button>
+</body>
+
+</html>
