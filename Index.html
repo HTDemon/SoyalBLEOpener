@@ -65,9 +65,11 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            Puck.eval("BTN.read()", function(x) {
-                console.log(x);
-            })
+            setTimeout(function() {
+                Puck.eval("BTN.read()", function(x) {
+                    console.log(x);
+                })
+            }, 5000);
         });
     </script>
     <button onclick="setP1();">Test set P1</button>
