@@ -57,14 +57,15 @@
                 if (isOn) {
                     Puck.eval("BTN.read()", function(x) {
                         if (x) {
-                            for (var i = 0; i < 3; i++) {
+                            for (var i = 0; i < 2; i++) {
                                 setTimeout(function() {
-                                    Puck.write('LED3.set();\n');
-                                }, 50);
+                                    Puck.write('LED2.set();\n');
+                                }, 10);
                                 setTimeout(function() {
-                                    Puck.write('LED3.reset();\n');
-                                }, 50);
+                                    Puck.write('LED2.reset();\n');
+                                }, 10);
                             }
+                            postData(url, data);
                         }
                     })
                 }
