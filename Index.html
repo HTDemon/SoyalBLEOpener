@@ -47,26 +47,24 @@
 
         function working() {
             setInterval(function() {
-                Puck.eval("BTN.read()", function(x) {
-                    if (x) {
-                        for (var i = 0; i < 3; i++) {
-                            setTimeout(function() {
-                                Puck.write('LED3.set();\n');
-                            }, 50);
-                            setTimeout(function() {
-                                Puck.write('LED3.reset();\n');
-                            }, 50);
+                if (Puck.isConnected()) {
+                    Puck.eval("BTN.read()", function(x) {
+                        if (x) {
+                            for (var i = 0; i < 3; i++) {
+                                setTimeout(function() {
+                                    Puck.write('LED3.set();\n');
+                                }, 50);
+                                setTimeout(function() {
+                                    Puck.write('LED3.reset();\n');
+                                }, 50);
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }, 250);
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            if (Puck.isConnected) {
-                working();
-            }
-
             Puck.eval("BTN.read()", function(x) {
                 console.log(x);
             })
