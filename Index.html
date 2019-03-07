@@ -9,6 +9,7 @@
     <p id="p1">Hello World!</p>
     <script src="src/scripts/puck.js"></script>
     <script>
+        var isOn = false;
         var url = 'http://192.168.31.30/buttons.cgi';
         var data = 'btn_Node=255&' +
             'btnOpenAllPulse=+Action+&' +
@@ -45,11 +46,15 @@
             Puck.eval("BTN.read()", function(x) {
                 console.log(x);
             });
+
+            if (Puck.isConnected()) {
+                isOn = true;
+            }
         }
 
         function working() {
             setInterval(function() {
-                if (Puck.isConnected()) {
+                if (isOn) {
                     Puck.eval("BTN.read()", function(x) {
                         if (x) {
                             for (var i = 0; i < 3; i++) {
@@ -72,6 +77,7 @@
             //         console.log(x);
             //     })
             // }, 5000);
+            working();
         });
     </script>
     <button onclick="pair();">Pair</button>
