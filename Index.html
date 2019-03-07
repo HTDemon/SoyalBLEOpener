@@ -59,17 +59,17 @@
                         }
                     }
                 })
-            }, 100);
+            }, 250);
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            Puck.eval("BTN.read()", function(x) {
-                console.log(x);
-            })
-
             if (Puck.isConnected) {
                 working();
             }
+
+            Puck.eval("BTN.read()", function(x) {
+                console.log(x);
+            })
         });
     </script>
     <button onclick="setP1();">Test set P1</button>
