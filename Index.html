@@ -41,8 +41,10 @@
                 .then(response => response.json()) // 輸出成 json
         }
 
-        function setP1() {
-            document.getElementById("p1").innerHTML = document.write();
+        function pair() {
+            Puck.eval("BTN.read()", function(x) {
+                console.log(x);
+            });
         }
 
         function working() {
@@ -65,14 +67,14 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(function() {
-                Puck.eval("BTN.read()", function(x) {
-                    console.log(x);
-                })
-            }, 5000);
+            // setTimeout(function() {
+            //     Puck.eval("BTN.read()", function(x) {
+            //         console.log(x);
+            //     })
+            // }, 5000);
         });
     </script>
-    <button onclick="setP1();">Test set P1</button>
+    <button onclick="pair();">Pair</button>
 </body>
 
 </html>
