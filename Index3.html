@@ -82,11 +82,15 @@
                                     Puck.write('LED2.reset();\n');
                                 }, 10);
                             }
-                            document.getElementById("myBtn").click();
+                            getBot();
                         }
                     })
                 }
             }, 250);
+        }
+
+        function getBot() {
+            window.location = "http://bot.demon-inc.tw:8092/Gate/Control/PluseOpen";
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -99,6 +103,7 @@
         });
     </script>
     <button onclick="pair();">Pair</button>
+    <button onclick="getBot();">Open</button>
 </body>
 
 </html>
