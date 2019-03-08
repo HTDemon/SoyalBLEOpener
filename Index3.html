@@ -1,0 +1,104 @@
+<html>
+<meta charset="UTF-8" />
+<title>Soyal Opener</title>
+
+<head>
+</head>
+
+<body>
+    <form actopn="http://192.168.31.30/buttons.cgi" method="POST">
+        <input type="hidden" name="btn_Node" value="255">
+        <input type="hidden" name="btnOpenAllPulse" value="+Action+">
+        <input type="hidden" name="btn_nameDI0" value="DI0">
+        <input type="hidden" name="btn_nameDI1" value="DI1">
+        <input type="hidden" name="btn_nameDI2" value="DI2">
+        <input type="hidden" name="btn_nameDI3" value="DI3">
+        <input type="hidden" name="btn_nameDO0" value="DO0">
+        <input type="hidden" name="delayDO0" value="0">
+        <input type="hidden" name="btn_nameDO1" value="DO1">
+        <input type="hidden" name="delayDO1" value="0">
+        <input type="hidden" name="btn_nameDO2" value="DO2">
+        <input type="hidden" name="delayDO2" value="0">
+        <input type="hidden" name="btn_nameDO3" value="DO3">
+        <input type="hidden" name="delayDO3" value="0">
+        <button type="submit" id="myBtn">Open</button>
+    </form>
+    <p id="p1">Hello World!</p>
+    <script src="src/scripts/puck.js"></script>
+    <script>
+        var isOn = false;
+        var url = 'http://192.168.31.30/buttons.cgi';
+        var data = 'btn_Node=255&' +
+            'btnOpenAllPulse=+Action+&' +
+            'btn_nameDI0=DI0&' +
+            'btn_nameDI1=DI2&' +
+            'btn_nameDI2=DI2&' +
+            'btn_nameDI3=DI3&' +
+            'btn_nameDO0=DO0&' +
+            'delayDO0=0&' +
+            'btn_nameDO1=DO1&' +
+            'delayDO1=0&' +
+            'btn_nameDO2=DO2&' +
+            'delayDO2=0&' +
+            'btn_nameDO3=DO3&' +
+            'delayDO3=0';
+
+        function postData(url, data) {
+            // Default options are marked with *
+            return fetch(url, {
+                    body: data, // must match 'Content-Type' header
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                        'Authorization': 'Basic YWRtaW46',
+                    },
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    redirect: 'follow', // manual, *follow, error
+                    referrer: 'no-referrer', // *client, no-referrer
+                })
+                .then(response => response.json()) // 輸出成 json
+        }
+
+        function pair() {
+            Puck.eval("BTN.read()", function(x) {
+                console.log(x);
+            });
+
+            if (Puck.isConnected()) {
+                isOn = true;
+            }
+        }
+
+        function working() {
+            setInterval(function() {
+                if (isOn) {
+                    Puck.eval("BTN.read()", function(x) {
+                        if (x) {
+                            for (var i = 0; i < 2; i++) {
+                                setTimeout(function() {
+                                    Puck.write('LED2.set();\n');
+                                }, 10);
+                                setTimeout(function() {
+                                    Puck.write('LED2.reset();\n');
+                                }, 10);
+                            }
+                            document.getElementById("myBtn").click();
+                        }
+                    })
+                }
+            }, 250);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // setTimeout(function() {
+            //     Puck.eval("BTN.read()", function(x) {
+            //         console.log(x);
+            //     })
+            // }, 5000);
+            working();
+        });
+    </script>
+    <button onclick="pair();">Pair</button>
+</body>
+
+</html>
